@@ -1,5 +1,4 @@
 using System.Runtime.InteropServices;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Layouts;
@@ -53,9 +52,10 @@ namespace BackgroundXInputControllerWindows
             InputSystem.onDeviceChange -= onDeviceChange;
         }
 
+#if UNITY_EDITOR
         private void Update()
         {
-            if (InternalEditorUtility.isApplicationActive)
+            if (UnityEditorInternal.InternalEditorUtility.isApplicationActive)
                 return;
 
             if (_device is not XInputControllerWindows gamepad)
@@ -75,6 +75,7 @@ namespace BackgroundXInputControllerWindows
                 rightStickY = XInputGamepadInternal.GetThumbRY(_xinputIndex),
             });
         }
+#endif
 
         private void onDeviceChange(InputDevice device, InputDeviceChange inputDeviceChange)
         {
